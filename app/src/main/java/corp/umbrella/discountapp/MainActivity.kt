@@ -1,11 +1,17 @@
 package corp.umbrella.discountapp
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import corp.umbrella.discountapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        private const val PREF_NAME = "prefName"
+        private const val KEY_COUNTER = "counter"
+    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -14,8 +20,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkCounter()
+
         binding.buttonGetResult.setOnClickListener {
             calculationResult()
+        }
+    }
+
+    private fun checkCounter() {
+        val value = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getInt(KEY_COUNTER, 0)
+        if (value == 3) {
+            showToast("Третий холодный запуск приложения")
         }
     }
 
